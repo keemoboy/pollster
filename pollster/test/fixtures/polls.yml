@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  maker_id: 1
+  edit_url: MyString
+  take_url: MyString
+
+two:
+  name: MyString
+  maker_id: 1
+  edit_url: MyString
+  take_url: MyString
