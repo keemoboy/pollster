@@ -10,7 +10,28 @@
   <dd><%= @question.poll_id %></dd>
 </dl>
 
+<dt><strong><%= model_class.human_attribute_name(:Responses) %>:</strong></dt>
+  <% @question.responses.each do |response| %>
+    <tr>
+      <td><%= link_to response.id, poll_question_response_path(@poll, @question, response) %></td>
+      <td><%= response.body %></td>
+      <td><%=l response.created_at %></td>
+      <td>
+        <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                    edit_poll_question_response_path(@poll, @question, response), :class => 'btn btn-mini' %>
+        <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                    poll_question_response_path(@poll, @question, response),
+                    :method => :delete,
+                    :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                    :class => 'btn btn-mini btn-danger' %>
+      </td>
+    </tr>
+  <% end %>
+
 <div class="form-actions">
+  <%= link_to t('.respond'),
+              new_poll_question_response_path(@poll,@question),
+              :class => 'btn'  %>
 
   <%= link_to t('.back', :default => t("helpers.links.back")),
               poll_questions_path, :class => 'btn'  %>

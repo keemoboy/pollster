@@ -8,6 +8,10 @@ Pollster::Application.routes.draw do
     end
   end
 
+  resources :questions, :only => [] do
+    resources :responses
+  end
+
 
 
 
