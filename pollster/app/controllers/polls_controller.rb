@@ -34,14 +34,13 @@ class PollsController < ApplicationController
 
   # GET /polls/1/edit
   def edit
-    @poll = Poll.find(params[:id])
+    @poll = Poll.find_by_edit_url(params[:id])
   end
 
   # POST /polls
   # POST /polls.json
   def create
     @poll = Poll.new(params[:poll])
-    @poll.generate_edit_url
 
     respond_to do |format|
       if @poll.save

@@ -1,23 +1,22 @@
-<%- model_class = Question -%>
+<%- model_class = Response -%>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human %></h1>
 </div>
 
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:body) %>:</strong></dt>
-  <dd><%= @question.body %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:poll_id) %>:</strong></dt>
-  <dd><%= @question.poll_id %></dd>
+  <dd><%= @response.body %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:question_id) %>:</strong></dt>
+  <dd><%= @response.question_id %></dd>
 </dl>
 
 <div class="form-actions">
-
   <%= link_to t('.back', :default => t("helpers.links.back")),
-              poll_questions_path, :class => 'btn'  %>
+              responses_path, :class => 'btn'  %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_poll_question_path(@question.poll_id, @question), :class => 'btn' %>
+              edit_response_path(@response), :class => 'btn' %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              poll_question_path(@question.poll_id, @question),
+              response_path(@response),
               :method => 'delete',
               :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
               :class => 'btn btn-danger' %>

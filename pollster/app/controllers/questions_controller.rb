@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
-  # GET /questions
-  # GET /questions.json
+  before_filter :load_poll
+
   def index
     @questions = Question.all
 
@@ -17,7 +17,7 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @question }
+      format.json { render json: poll_question_path(@question.poll, @question) }
     end
   end
 
@@ -28,7 +28,7 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @question }
+      format.json { render json: poll_question_path(@question.poll, @question) }
     end
   end
 
@@ -41,12 +41,11 @@ class QuestionsController < ApplicationController
   # POST /questions.json
   def create
     @question = Question.new(params[:question])
-    @question.poll_id = (params[:poll_id]).to_i
-
+    @question.poll = @poll
     respond_to do |format|
       if @question.save
-        format.html { redirect_to @question, notice: 'Question was successfully created.' }
-        format.json { render json: @question, status: :created, location: @question }
+        format.html { redirect_to poll_question_path(@question.poll, @question), notice: 'Question was successfully created.' }
+        format.json { render json: poll_question_path(@question.poll, @question), status: :created, location: poll_question_path(@question.poll, @question) }
       else
         format.html { render action: "new" }
         format.json { render json: @question.errors, status: :unprocessable_entity }
@@ -61,7 +60,7 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.update_attributes(params[:question])
-        format.html { redirect_to @question, notice: 'Question was successfully updated.' }
+        format.html { redirect_to poll_question_path(@question.poll, @question), notice: 'Question was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -77,8 +76,14 @@ class QuestionsController < ApplicationController
     @question.destroy
 
     respond_to do |format|
-      format.html { redirect_to questions_url }
+      format.html { redirect_to poll_questions_path(@poll) }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def load_poll
+    @poll = Poll.find params[:poll_id]
   end
 end

@@ -1,12 +1,11 @@
 Pollster::Application.routes.draw do
 
-  resources :questions
-
   root :to => 'polls#index'
 
   resources :polls do
-    resources :questions
-    # match "polls/#{poll.edit_url}" => 'polls#edit'
+    resources :questions do
+      resources :responses
+    end
   end
 
 
